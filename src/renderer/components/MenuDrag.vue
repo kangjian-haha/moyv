@@ -1,13 +1,9 @@
 <template>
   <div class="menu drag">
     <div class="menu-group">
-      <div
-        v-for="item in appStore.menuList"
-        :key="item.name"
-        class="menu-item flex-center no-drag"
+      <div v-for="item in appStore.menuList" :key="item.name" class="menu-item flex-center no-drag"
         :class="{ 'menu-item-activity': item.name === appStore.activityMenu?.name }"
-        @click="openWeview(item)"
-      >
+        @mousedown="handleClick($event, item)">
         <img class="menu-item-icon" :src="item.icon" alt="icon" srcset="" />
       </div>
     </div>
@@ -42,6 +38,20 @@ const openWeview = (item: IMenuItem) => {
 const jumpTo = (route: string) => {
   router.push(`${route}`)
 }
+
+const handleClick = (e: MouseEvent, item: IMenuItem) => {
+  if (e.button === 0) {
+    openWeview(item)
+  } else if (e.button === 1) {
+    // 移除某一项
+    const index = appStore.menuList.findIndex((menu) => menu.name === item.name)
+    if (index !== -1) {
+      appStore.menuList.splice(index, 1)
+      appStore.updateMenuList(appStore.menuList)
+      jumpTo('setting')
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -54,9 +64,11 @@ const jumpTo = (route: string) => {
   flex-direction: column;
   padding: 16px 0;
   box-sizing: border-box;
+
   .menu-group {
     flex: 1;
   }
+
   .menu-item {
     width: 40px;
     height: 40px;
@@ -64,14 +76,17 @@ const jumpTo = (route: string) => {
 
     margin-bottom: 8px;
     cursor: pointer;
+
     .menu-item-icon {
       width: 24px;
       height: 24px;
     }
   }
+
   .menu-item:hover {
     background-color: var(--primary-content-color);
   }
+
   .menu-item-activity {
     background-color: var(--primary-content-color);
   }

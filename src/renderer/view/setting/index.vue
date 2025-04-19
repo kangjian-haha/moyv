@@ -44,7 +44,6 @@ import RednoteIcon from '@/renderer/assets/icons/rednoteIcon.svg'
 import TikTokIcon from '@/renderer/assets/icons/tikTokIcon.svg'
 import BaiduIcon from '@/renderer/assets/icons/baiduIcon.svg'
 
-console.log('ChatGptIcon', ChatGptIcon)
 const searchText = ref('')
 const favouritesList = ref<IMenuItem[]>([
   {
@@ -96,14 +95,6 @@ const favouritesList = ref<IMenuItem[]>([
     activityIcon: TikTokIcon,
     route: '/webview'
   }
-
-  // {
-  //   icon: JuejinIcon,
-  //   name: '稀土掘金',
-  //   url: '  https://juejin.cn/',
-  //   activityIcon: JuejinIcon,
-  //   route: '/webview'
-  // }
 ])
 
 const appStore = useAppStore()
